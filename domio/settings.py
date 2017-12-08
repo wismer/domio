@@ -84,10 +84,11 @@ WSGI_APPLICATION = 'domio.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'domio',
-        'USERNAME': 'domio',
-        'PASSWORD': 'domio',
-        'PORT': '5432'
+        'NAME': get_env_variable('PGDB_NAME'),
+        'USERNAME': get_env_variable('PGDB_USERNAME'),
+        'PASSWORD': get_env_variable('PGDB_PASSWORD'),
+        'HOST': get_env_variable('PGDB_HOST'),
+        'PORT': get_env_variable('PGDB_PORT')
     }
 }
 
