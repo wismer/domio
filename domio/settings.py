@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 from dotenv import load_dotenv
 from django.core.exceptions import ImproperlyConfigured
+import dj_database_url
 
 
 def get_env_variable(key):
@@ -27,7 +28,7 @@ dotenv_path = os.path.join(BASE_DIR, '.env')
 load_dotenv(dotenv_path)
 
 SECRET_KEY = get_env_variable('SECRET_KEY')
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -85,17 +86,23 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': get_env_variable('PGDB_NAME'),
-        'USERNAME': get_env_variable('PGDB_USERNAME'),
+        'USER': get_env_variable('PGDB_USERNAME'),
         'PASSWORD': get_env_variable('PGDB_PASSWORD'),
         'HOST': get_env_variable('PGDB_HOST'),
         'PORT': get_env_variable('PGDB_PORT')
     }
 }
 
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
 }
 
 GOOGLE_MAPS_API_KEY = get_env_variable('GOOGLE_MAPS_API_KEY')

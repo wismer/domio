@@ -5,3 +5,5 @@ psycopg2==2.7.3
 python-dotenv==0.7.1
 django-extensions==1.9.8
 ipdb==0.10.3
+gunicorn==19.7.1
+dj-database-url==0.4.2
